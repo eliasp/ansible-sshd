@@ -1,4 +1,13 @@
 ---
+- name: Reload systemd units
+  ansible.builtin.systemd:
+    daemon_reload: true
+  when:
+    - ansible_facts['virtualization_type']|default(None) not in __sshd_skip_virt_env
+    - ansible_connection != 'chroot'
+    - ansible_facts['os_family'] != 'AIX'
+    - ansible_facts['os_family'] != 'OpenWrt'
+  listen: reload_units
 
 - name: Reload the SSH service
   ansible.builtin.service:
