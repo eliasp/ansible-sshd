@@ -24,6 +24,7 @@
         {{ sshd_binary }} -t -f %s
       {% endif %}
     backup: "{{ sshd_backup }}"
+  changed_when: not sshd_socket_activation|bool
   notify: reload_sshd
 
 - name: Make sure the include path is present in the main sshd_config
@@ -43,6 +44,7 @@
         {{ sshd_binary }} -t -f %s
       {% endif %}
     backup: "{{ sshd_backup }}"
+  changed_when: not sshd_socket_activation|bool
   notify: reload_sshd
   when:
     - sshd_main_config_file is not none

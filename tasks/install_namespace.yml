@@ -21,4 +21,5 @@
         {{ sshd_binary }} -t -f %s
       {% endif %}
     backup: "{{ sshd_backup }}"
+  changed_when: not sshd_socket_activation|bool
   notify: reload_sshd
